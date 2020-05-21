@@ -6,9 +6,9 @@ from shop.models import Product
 class Cart(object):
     def __init__(self, request):
         self.session = request.session
-        cart = self.session.get(settings.CARD_SESSION_ID)
+        cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
-            cart = self.session[settings.CARD_SESSION_ID] = {}
+            cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
 
     def add(self, product, quantity=1, update_quantity=False):
@@ -33,7 +33,6 @@ class Cart(object):
     def __iter__(self):
         product_ids = self.cart.keys()
         products = Product.objects.filter(id__in=product_ids)
-
         cart = self.cart.copy()
         for product in products:
             cart[str(product.id)]['product'] = product
@@ -50,5 +49,5 @@ class Cart(object):
         return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
 
     def clear(self):
-        del self.session[settings.CARD_SESSION_ID]
+        del self.session[settings.CART_SESSION_ID]
         self.save()

@@ -124,5 +124,5 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-CARD_SESSION_ID = 'cart'
+CART_SESSION_ID = 'cart'
 # CARD_SESSION_ID = 'cart'
